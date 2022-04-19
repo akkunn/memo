@@ -11,10 +11,15 @@ if memo_type == "1"
     p "メモしたい内容を記入してください"
     p "完了したらをCtrl + Dを押します"
     text = readlines
-
     CSV.open("#{file_name}.csv", 'w', :quote_char => '') do |csv|
-      csv << text
+      text.each do |memo|
+        re_memo = memo.chomp
+        csv << [re_memo]  
+      end
     end
+    p "保存しました"
+    p "---------------メモ---------------"
+    puts CSV.read("#{file_name}.csv")
   end
 elsif memo_type == "2"
   puts "拡張子を除いたファイル名を入力してください"
@@ -22,14 +27,18 @@ elsif memo_type == "2"
   if refile_name
     CSV.open("#{refile_name}.csv", 'a', :quote_char => '') do |recsv|
       p "メモしたい内容を記入してください"
+      p "完了したらをCtrl + Dを押します"
+      p "---------------メモ---------------"
+      puts CSV.read("#{refile_name}.csv")
       context = readlines
-      p context
-      recsv << context
+      context.each do |rememo|
+        rerememo = rememo.chomp
+        recsv << [rerememo]  
+      end
     end
-    # puts "----------＜メモ＞----------"
-    # CSV.foreach("#{refile_name}.csv") do |row|
-    #   puts row.join(",")
-    # end    
+    p "保存しました"
+    p "---------------メモ---------------"
+    puts CSV.read("#{refile_name}.csv")
   end
 else
   puts "1か2を入力してください。"
